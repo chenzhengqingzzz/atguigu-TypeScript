@@ -3,7 +3,7 @@
  * @Email: tenchenzhengqing@qq.com
  * @Date: 2023-06-15 16:07:39
  * @LastEditors: 陈正清macbook pro
- * @LastEditTime: 2023-06-15 16:08:20
+ * @LastEditTime: 2023-06-15 16:56:46
  * @FilePath: /尚硅谷TypeScript/chapter02/part2/src/modules/ScorePanel.ts
  * @Description: 计分板的类
  * 
@@ -31,7 +31,10 @@ class ScorePanel {
         this.upScore = upScore
     }
 
-    // 设置一个加分的方法
+    /**
+     * @description: 设置一个加分的方法
+     * @return {*}
+     */
     addScore() {
         // 使分数自增
         this.score++
@@ -43,7 +46,10 @@ class ScorePanel {
         }
     }
 
-    // 提升关卡等级的方法
+    /**
+     * @description: 提升关卡等级的方法
+     * @return {*}
+     */
     levelUp() {
         if (this.level < this.maxLevel) {
             this.level++

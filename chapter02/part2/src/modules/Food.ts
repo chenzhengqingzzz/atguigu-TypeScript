@@ -3,7 +3,7 @@
  * @Email: tenchenzhengqing@qq.com
  * @Date: 2023-06-15 16:06:35
  * @LastEditors: 陈正清macbook pro
- * @LastEditTime: 2023-06-15 16:07:14
+ * @LastEditTime: 2023-06-15 16:57:27
  * @FilePath: /尚硅谷TypeScript/chapter02/part2/src/modules/Food.ts
  * @Description: 食物类
  * 
@@ -20,14 +20,21 @@ class Food {
         this.element = <HTMLElement>document.getElementById('food')
     }
 
-    // 用getter 获取食物XY轴坐标的方法
+    /**
+     * @description: 用getter 获取食物XY轴坐标的方法
+     * @return {HTMLElement}
+     */
     get X() {
         return this.element.offsetLeft
     }
     get Y() {
         return this.element.offsetTop
     }
-    // 修改食物的位置
+    
+    /**
+     * @description: 修改食物的位置
+     * @return {*}
+     */
     changePosition() {
         // 生成随机的位置
         // 食物的位置最小是0 最大是舞台区宽度-食物宽度 也就是290
