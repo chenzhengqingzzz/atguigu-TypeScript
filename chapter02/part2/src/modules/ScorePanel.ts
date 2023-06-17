@@ -2,9 +2,9 @@
  * @Author: czqczqzzzzzz(czq)
  * @Email: tenchenzhengqing@qq.com
  * @Date: 2023-06-15 16:07:39
- * @LastEditors: 陈正清macbook pro
- * @LastEditTime: 2023-06-15 16:56:46
- * @FilePath: /尚硅谷TypeScript/chapter02/part2/src/modules/ScorePanel.ts
+ * @LastEditors: 陈正清MacPro
+ * @LastEditTime: 2023-06-17 21:31:56
+ * @FilePath: /atguigu-TypeScript/chapter02/part2/src/modules/ScorePanel.ts
  * @Description: 计分板的类
  * 
  * Copyright (c) by czqczqzzzzzz(czq), All Rights Reserved. 
@@ -12,8 +12,8 @@
 // 定义表示记分牌的类
 class ScorePanel {
     // score和level用来记录分数和等级
-    private score = 0
-    private level = 1
+    score = 0
+    level = 1
     // 分数和等级所在的元素，在构造函数中进行初始化
     scoreEle: HTMLElement
     levelEle: HTMLElement
