@@ -3,7 +3,7 @@
  * @Email: tenchenzhengqing@qq.com
  * @Date: 2023-06-15 21:16:55
  * @LastEditors: 陈正清MacPro
- * @LastEditTime: 2023-06-17 21:41:57
+ * @LastEditTime: 2023-06-18 21:38:15
  * @FilePath: /atguigu-TypeScript/chapter02/part2/src/modules/GameControl.ts
  * @Description: 游戏控制器 用于控制其他的所有类
  * 
@@ -48,7 +48,7 @@ class GameControl {
 
     keydownHandler(event: KeyboardEvent) {
         console.log(event);
-        
+
         // 需要检查event.key的值是否合法（用户是否按了正确的按键）
 
         // 修改direction属性
@@ -75,7 +75,7 @@ class GameControl {
         // 获取蛇现在的坐标
         let X = this.snake.X
         let Y = this.snake.Y
-        
+
         // 根据按键的方向修改X值和Y值
         switch (this.direction) {
             case 'ArrowUp':
@@ -97,14 +97,41 @@ class GameControl {
             default:
                 break;
         }
-        // debugger
+
+        // 检查蛇是否吃到了食物
+        this.checkEat(X, Y)
+
         // 修改蛇身上的X属性和Y属性
-        this.snake.X = X
-        this.snake.Y = Y        
+        try {
+            this.snake.X = X
+            this.snake.Y = Y
+        } catch (error: any) {
+            // 进入到catch 说明出现了异常 这里捕获了Snake类抛出的异常 游戏结束 弹出一个提示信息
+            alert(error.message + 'GAME OVER!')
+            this.isLive = false
+        }
 
         // 如果蛇活着，则开启一个定时调用 在这里本质是一个递归
         // run作为函数传入 可能也会有this指向问题 所以我们使用bind把this调成调用run的实例
         this.isLive && setTimeout(this.run.bind(this), 300 - (this.scorePanel.level - 1) * 30);
+    }
+
+    /**
+     * @description: 检查蛇是否吃到食物
+     * @param {number} X 蛇移动的X坐标 用于对比食物的X坐标
+     * @param {number} Y 蛇移动的Y坐标 用于对比食物的Y坐标
+     * @return {*}
+     */
+    checkEat(X: number, Y: number) {
+        if (X === this.food.X && Y === this.food.Y) {
+            console.log('吃到食物了');
+            // 食物的位置要进行重置
+            this.food.changePosition()
+            // 分数增加
+            this.scorePanel.addScore()
+            // 蛇身体长度增加一节
+            this.snake.addBody()
+        }
     }
 }
 
