@@ -2,9 +2,9 @@
  * @Author: czqczqzzzzzz(czq)
  * @Email: tenchenzhengqing@qq.com
  * @Date: 2023-06-15 16:24:51
- * @LastEditors: 陈正清MacPro
- * @LastEditTime: 2023-06-18 21:04:50
- * @FilePath: /atguigu-TypeScript/chapter02/part2/src/modules/Snake.ts
+ * @LastEditors: 陈正清macbook pro
+ * @LastEditTime: 2023-06-20 16:59:15
+ * @FilePath: /尚硅谷TypeScript/chapter02/part2/src/modules/Snake.ts
  * @Description: 蛇的类
  * 
  * Copyright (c) by czqczqzzzzzz(czq), All Rights Reserved. 
@@ -52,7 +52,11 @@ class Snake {
             throw new Error('蛇撞墙了！')
         }
 
+        // 移动身体 注意先后顺序 debugger麻了才知道是这里的问题
+        this.moveBody()
+        // 移动头部
         this.snakeHead.style.left = value + 'px'
+
     }
     set Y(value) {
         // 如果新值和旧值相同，则直接返回不再修改
@@ -66,7 +70,11 @@ class Snake {
             throw new Error('蛇撞墙了！')
         }
 
+        // 移动身体 注意先后顺序 debugger麻了才知道是这里的问题
+        this.moveBody()
+        // 移动头部
         this.snakeHead.style.top = value + 'px'
+
     }
 
     /**
@@ -75,7 +83,35 @@ class Snake {
      */
     addBody() {
         // 向element中添加一个div
+        // debugger
         this.element.insertAdjacentHTML('beforeend', '<div></div>')
+    }
+
+    /**
+     * @description: 蛇身体移动的方法
+     * @return {*}
+     */
+    moveBody() {
+        /*
+        *   将后面的身体设置为前一个身体的位置
+        *       举例子：
+        *           第4节 = 第3节的位置
+        *           第3节 = 第2节的位置
+        *           第2节 = 第1节的位置
+        *   
+        * 
+        * */
+        // 遍历获取所有的身体(注意这里是从后往前遍历）
+        for(let i = this.snakeBodies.length - 1; i > 0; i--){
+            // 获取当前身体的前一节身体的位置
+            // 类型断言 告诉ts 它的类型就是HTMLelement
+            let frontX = (<HTMLElement>this.snakeBodies[i - 1]).offsetLeft;
+            let frontY = (<HTMLElement>this.snakeBodies[i - 1]).offsetTop;
+
+            // 将前一节身体的值设置到当前身体上
+            (<HTMLElement>this.snakeBodies[i]).style.left = frontX + 'px';
+            (this.snakeBodies[i] as HTMLElement).style.top = frontY + 'px';
+        }
     }
 }
 
