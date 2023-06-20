@@ -2,9 +2,9 @@
  * @Author: czqczqzzzzzz(czq)
  * @Email: tenchenzhengqing@qq.com
  * @Date: 2023-06-15 16:07:39
- * @LastEditors: 陈正清MacPro
- * @LastEditTime: 2023-06-17 21:31:56
- * @FilePath: /atguigu-TypeScript/chapter02/part2/src/modules/ScorePanel.ts
+ * @LastEditors: 陈正清macbook pro
+ * @LastEditTime: 2023-06-20 20:29:56
+ * @FilePath: /尚硅谷TypeScript/chapter02/part2/src/modules/ScorePanel.ts
  * @Description: 计分板的类
  * 
  * Copyright (c) by czqczqzzzzzz(czq), All Rights Reserved. 
@@ -23,7 +23,7 @@ class ScorePanel {
     // 设置一个变量表示升1级所需的分数
     upScore: number
 
-    // maxLevel不传就是10
+    // maxLevel、upScore不传就是10
     constructor(maxLevel: number = 10, upScore: number = 10) {
         this.scoreEle = <HTMLElement>document.getElementById('score')
         this.levelEle = <HTMLElement>document.getElementById('level')

@@ -2,9 +2,9 @@
  * @Author: czqczqzzzzzz(czq)
  * @Email: tenchenzhengqing@qq.com
  * @Date: 2023-06-15 21:16:55
- * @LastEditors: 陈正清MacPro
- * @LastEditTime: 2023-06-18 21:38:15
- * @FilePath: /atguigu-TypeScript/chapter02/part2/src/modules/GameControl.ts
+ * @LastEditors: 陈正清macbook pro
+ * @LastEditTime: 2023-06-20 20:30:02
+ * @FilePath: /尚硅谷TypeScript/chapter02/part2/src/modules/GameControl.ts
  * @Description: 游戏控制器 用于控制其他的所有类
  * 
  * Copyright (c) by czqczqzzzzzz(czq), All Rights Reserved. 
@@ -31,7 +31,7 @@ class GameControl {
     constructor() {
         this.snake = new Snake()
         this.food = new Food()
-        this.scorePanel = new ScorePanel()
+        this.scorePanel = new ScorePanel(10, 2)
         this.init()
     }
 

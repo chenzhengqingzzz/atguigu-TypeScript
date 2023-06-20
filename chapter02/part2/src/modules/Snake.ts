@@ -3,7 +3,7 @@
  * @Email: tenchenzhengqing@qq.com
  * @Date: 2023-06-15 16:24:51
  * @LastEditors: 陈正清macbook pro
- * @LastEditTime: 2023-06-20 16:59:15
+ * @LastEditTime: 2023-06-20 20:52:35
  * @FilePath: /尚硅谷TypeScript/chapter02/part2/src/modules/Snake.ts
  * @Description: 蛇的类
  * 
@@ -52,13 +52,29 @@ class Snake {
             throw new Error('蛇撞墙了！')
         }
 
+        // 修改X时，是在修改水平坐标，蛇在左右移动，蛇在向左移动就不能向右掉头，反之亦然
+        // 先检查有没有除了蛇头以外的身体 以及依据新传入的水平值是否等于蛇身的水平值来判断会不会掉头
+        if (this.snakeBodies[1] && (<HTMLElement>this.snakeBodies[1]).offsetLeft === value) {
+            // console.log('水平方向发生了掉头');
+            // 如果发生了掉头，我们应该让蛇向反方向继续移动
+            if (value > this.X) {
+                // 如果传入的新值一直是大X，说明我们是向右掉头 我们应该继续让蛇保持向左走
+                value = this.X - 10
+            } else {
+                // 传入的新值一直小于X，说明我们是向左掉头 所以保持右移动
+                value = this.X + 10
+            }
+        }
+
         // 移动身体 注意先后顺序 debugger麻了才知道是这里的问题
         this.moveBody()
         // 移动头部
         this.snakeHead.style.left = value + 'px'
-
+        // 检查蛇头有没有撞到自己
+        this.checkHeadEatBody()
     }
     set Y(value) {
+        // console.log('竖直方向发生了掉头');
         // 如果新值和旧值相同，则直接返回不再修改
         if (this.Y === value) {
             return
@@ -69,11 +85,21 @@ class Snake {
             // 进入判断说明蛇撞墙了 这个时候需要抛出一个异常
             throw new Error('蛇撞墙了！')
         }
+        // 在Y轴掉头时 一样的逻辑
+        if (this.snakeBodies[1] && (<HTMLElement>this.snakeBodies[1]).offsetTop === value) {
+            if (value > this.Y) {
+                value = this.Y - 10
+            } else {
+                value = this.Y + 10
+            }
+        }
 
         // 移动身体 注意先后顺序 debugger麻了才知道是这里的问题
         this.moveBody()
         // 移动头部
         this.snakeHead.style.top = value + 'px'
+        // 检查蛇头有没有撞到自己
+        this.checkHeadEatBody()
 
     }
 
@@ -91,6 +117,7 @@ class Snake {
      * @description: 蛇身体移动的方法
      * @return {*}
      */
+    
     moveBody() {
         /*
         *   将后面的身体设置为前一个身体的位置
@@ -102,7 +129,7 @@ class Snake {
         * 
         * */
         // 遍历获取所有的身体(注意这里是从后往前遍历）
-        for(let i = this.snakeBodies.length - 1; i > 0; i--){
+        for (let i = this.snakeBodies.length - 1; i > 0; i--) {
             // 获取当前身体的前一节身体的位置
             // 类型断言 告诉ts 它的类型就是HTMLelement
             let frontX = (<HTMLElement>this.snakeBodies[i - 1]).offsetLeft;
@@ -111,6 +138,21 @@ class Snake {
             // 将前一节身体的值设置到当前身体上
             (<HTMLElement>this.snakeBodies[i]).style.left = frontX + 'px';
             (this.snakeBodies[i] as HTMLElement).style.top = frontY + 'px';
+        }
+    }
+
+    /**
+     * @description: 检查蛇头是否撞到蛇身
+     * @return {*}
+     */
+    checkHeadEatBody() {
+        // 获取所有身体，检查其是否和蛇头坐标重叠
+        for (let i = 1; i < this.snakeBodies.length; i++) {
+            if (this.X === (<HTMLElement>this.snakeBodies[i]).offsetLeft && this.Y === (<HTMLElement>this.snakeBodies[i]).offsetTop) {
+                // 进入判断说明蛇头撞到了身体 游戏结束
+                throw new Error("撞到自己了~~");
+                
+            }
         }
     }
 }
